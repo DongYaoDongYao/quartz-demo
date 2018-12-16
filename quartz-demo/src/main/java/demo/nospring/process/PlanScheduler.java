@@ -30,16 +30,16 @@ public class PlanScheduler {
 	 * @throws SchedulerException
 	 */
 	public void addPlan(HashMap<String, String> processParses) throws SchedulerException {
-
+		
 		JobDetail jobDetail = JobBuilder.newJob(PlanJob.class)
 								.withIdentity("001", JOB_GROUP)
 								.build();		
 		jobDetail.getJobDataMap().put("processParses", processParses);// 流程表参数
 
 		CronTrigger trigger = TriggerBuilder.newTrigger()
-				.withIdentity("001", TRIGGER_GROUP)
-				.withSchedule(CronScheduleBuilder.cronSchedule(processParses.get("cron")))
-				.build();
+								.withIdentity("001", TRIGGER_GROUP)
+								.withSchedule(CronScheduleBuilder.cronSchedule(processParses.get("cron")))
+								.build();
 		
 		Scheduler scheduler = schedulerFactory.getScheduler();
 		scheduler.scheduleJob(jobDetail, trigger);

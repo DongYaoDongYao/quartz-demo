@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"  
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:context="http://www.springframework.org/schema/context"  
+    xsi:schemaLocation="http://www.springframework.org/schema/beans   
+    http://www.springframework.org/schema/beans/spring-beans.xsd  
+    http://www.springframework.org/schema/context   
+    http://www.springframework.org/schema/context/spring-context.xsd">
+   
+    <bean id="job_1" class="demo.spring.ram.HiJob"></bean>
+    
+    <!-- 人物类 -->
+    <bean id="jobDetail_1" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+    	<!-- 执行的类 -->
+    	<property name="targetObject">
+    		<ref bean="job_1"/>
+    	</property>
+    	<!-- 执行的方法 -->
+    	<property name="targetMethod">
+    		<value>sayHi</value>
+    	</property>
+    </bean>
+    
+    <!-- 调度器 -->
+    <bean id="cronTrigger_1" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+    	<property name="jobDetail">
+    		<ref bean="jobDetail_1"/>
+    	</property>
+    	<property name="cronExpression">
+    		<value>0/1 * * * * ?</value>
+    	</property>
+    </bean>
+    
+    <!-- 总管理类 -->
+    <bean id="scheduler_1" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+    	<property name="triggers">
+    		<list>
+    			<ref bean="cronTrigger_1"/>
+    		</list>
+    	</property>
+    </bean>
+    
+ </beans>

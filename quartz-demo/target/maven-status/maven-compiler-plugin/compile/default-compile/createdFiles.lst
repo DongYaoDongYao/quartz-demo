@@ -1,0 +1,5 @@
+demo\spring\ram\HiJob.class
+demo\nospring\ram\HelloJob.class
+demo\nospring\ram\SimpleDemo.class
+demo\nospring\process\PlanScheduler$PlanJob.class
+demo\nospring\process\PlanScheduler.class
